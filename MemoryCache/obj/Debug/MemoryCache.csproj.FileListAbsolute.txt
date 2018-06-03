@@ -1,0 +1,6 @@
+D:\var\MemoryCache\MemoryCache\bin\Debug\MemoryCache.exe.config
+D:\var\MemoryCache\MemoryCache\bin\Debug\MemoryCache.exe
+D:\var\MemoryCache\MemoryCache\bin\Debug\MemoryCache.pdb
+D:\var\MemoryCache\MemoryCache\obj\Debug\MemoryCache.csprojResolveAssemblyReference.cache
+D:\var\MemoryCache\MemoryCache\obj\Debug\MemoryCache.exe
+D:\var\MemoryCache\MemoryCache\obj\Debug\MemoryCache.pdb

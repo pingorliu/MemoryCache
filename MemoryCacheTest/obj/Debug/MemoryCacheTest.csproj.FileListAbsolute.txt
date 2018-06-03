@@ -1,0 +1,8 @@
+D:\var\MemoryCache\MemoryCacheTest\bin\Debug\MemoryCacheTest.dll
+D:\var\MemoryCache\MemoryCacheTest\bin\Debug\MemoryCacheTest.pdb
+D:\var\MemoryCache\MemoryCacheTest\bin\Debug\MemoryCache.exe
+D:\var\MemoryCache\MemoryCacheTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+D:\var\MemoryCache\MemoryCacheTest\bin\Debug\MemoryCache.pdb
+D:\var\MemoryCache\MemoryCacheTest\obj\Debug\MemoryCacheTest.csprojResolveAssemblyReference.cache
+D:\var\MemoryCache\MemoryCacheTest\obj\Debug\MemoryCacheTest.dll
+D:\var\MemoryCache\MemoryCacheTest\obj\Debug\MemoryCacheTest.pdb
