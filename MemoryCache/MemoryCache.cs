@@ -79,68 +79,62 @@ namespace MemoryCache
         /// </summary>
         public void AddOrUpdate(TKey key, TValue value)
         {
-            if(Size <=0)
+            if (Size <= 0)
             {
                 Console.WriteLine("Invalid Memory Cache Size");
                 return;
             }
-            try
+
+            //For thread-safe
+            lock (_object)
             {
-                //For thread-safe
-                lock (_object)
+                CacheNode node = null;
+                //Check if the Cache contains this key using Dictionary to achieve O(1)
+                if (!CacheStore.ContainsKey(key))
                 {
-                    CacheNode node = null;
-                    //Check if the Cache contains this key using Dictionary to achieve O(1)
-                    if (!CacheStore.ContainsKey(key))
+                    //If the Cache does not contain this key, a new Record needs to be added to the Cache
+                    //Check the Cache Size to see if we need to remove the least recently added/updated/retrieved item due to the Eviction Policy
+                    if (CacheStore.Count == Size)
                     {
-                        //If the Cache does not contain this key, a new Record needs to be added to the Cache
-                        //Check the Cache Size to see if we need to remove the least recently added/updated/retrieved item due to the Eviction Policy
-                        if (CacheStore.Count == Size)
+                        //If the current Cache is full, the tail of the Doubly Linked List need to be removed/cut due to the Eviction Policy
+                        if (tail != null)
                         {
-                            //If the current Cache is full, the tail of the Doubly Linked List need to be removed/cut due to the Eviction Policy
+                            var keyToRemove = tail.key;
+                            tail = tail.previousNode;
                             if (tail != null)
                             {
-                                var keyToRemove = tail.key;
-                                tail = tail.previousNode;
-                                if (tail != null)
-                                {
-                                    tail.nextNode = null;
-                                }
-                                //Remove the record from the Dictionary
-                                CacheStore.Remove(keyToRemove);
+                                tail.nextNode = null;
                             }
+                            //Remove the record from the Dictionary
+                            CacheStore.Remove(keyToRemove);
                         }
-                        //Add a new Node as the Head of the Doubly Linked List due to the Eviction Policy
-                        CacheNode new_Head = new CacheNode();
-                        new_Head.previousNode = null;
-                        new_Head.key = key;
-                        new_Head.value = value;
-                        new_Head.nextNode = head;
-                        if (head != null)
-                        {
-                            head.previousNode = new_Head;
-                        }
-                        head = new_Head;
-                        if (tail == null)
-                        {
-                            tail = new_Head;
-                        }
-                        //Store the record in the Dictionary
-                        CacheStore.Add(key, new_Head);
                     }
-                    else
+                    //Add a new Node as the Head of the Doubly Linked List due to the Eviction Policy
+                    CacheNode new_Head = new CacheNode();
+                    new_Head.previousNode = null;
+                    new_Head.key = key;
+                    new_Head.value = value;
+                    new_Head.nextNode = head;
+                    if (head != null)
                     {
-                        node = CacheStore[key];
-                        //Update and Change Position
-                        //Update
-                        node.value = value;
-                        ChangeToHead(node);
+                        head.previousNode = new_Head;
                     }
+                    head = new_Head;
+                    if (tail == null)
+                    {
+                        tail = new_Head;
+                    }
+                    //Store the record in the Dictionary
+                    CacheStore.Add(key, new_Head);
                 }
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
+                else
+                {
+                    node = CacheStore[key];
+                    //Update and Change Position
+                    //Update
+                    node.value = value;
+                    ChangeToHead(node);
+                }
             }
         }
 
@@ -150,32 +144,23 @@ namespace MemoryCache
         /// </summary>
         public bool TryGetValue(TKey key, out TValue value)
         {
-            try
+            //For thread-safe
+            lock (_object)
             {
-                //For thread-safe
-                lock (_object)
+                //Check if the Cache contains this key using Dictionary to achieve O(1)
+                if (CacheStore.ContainsKey(key))
                 {
-                    //Check if the Cache contains this key using Dictionary to achieve O(1)
-                    if (CacheStore.ContainsKey(key))
-                    {
-                        var node = CacheStore[key];
-                        value = node.value;
-                        //Because this node is visisted now, it should become the Head of the Doubly Linked List because of the Eviction Policy
-                        ChangeToHead(node);
-                        return true;
-                    }
-                    else
-                    {
-                        value = default(TValue);
-                        return false;
-                    }
+                    var node = CacheStore[key];
+                    value = node.value;
+                    //Because this node is visisted now, it should become the Head of the Doubly Linked List because of the Eviction Policy
+                    ChangeToHead(node);
+                    return true;
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                value = default(TValue);
-                return false;
+                else
+                {
+                    value = default(TValue);
+                    return false;
+                }
             }
         }
 
