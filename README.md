@@ -16,9 +16,8 @@ Overall code coverage percentage: 99.70%
 
 #### Get record from cache
 
-> int value; 
-> bool result = cache.TryGetValue(1, out value);// result is
-> true if the key existed in the cache
+> int value;                                 
+> bool result = cache.TryGetValue(1, out value);// result is true if the key existed in the cache
 
 ### Use User Defined Type as Key
 To use a User Define Type as the key, a Comparer needs to be implemented and passed to the constructor of the MemoryCache.
