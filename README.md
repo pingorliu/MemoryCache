@@ -16,7 +16,8 @@ Overall code coverage percentage: 99.70%
 
 #### Get record from cache
 
-> int value; bool result = cache.TryGetValue(1, out value);// result is
+> int value; 
+> bool result = cache.TryGetValue(1, out value);// result is
 > true if the key existed in the cache
 
 ### Use User Defined Type as Key
@@ -55,5 +56,5 @@ The Comaparer needs to inherit from IEqualityComparer and implement Equals and G
 
 #### Get record from cache
 
-> Value value; 
+> Value value;                                         
 > bool result = cache.TryGetValue(new Key { x = 1, y = 1 },out value);
