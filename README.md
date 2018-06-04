@@ -56,4 +56,4 @@ The Comaparer needs to inherit from IEqualityComparer and implement Equals and G
 #### Get record from cache
 
 > Value value;                                         
-> bool result = cache.TryGetValue(new Key { x = 1, y = 1 },out value);
+> bool result = cache.TryGetValue(new Key { x = 1, y = 1 },out value);// Pass a user defined class as the Key
