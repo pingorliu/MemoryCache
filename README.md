@@ -3,7 +3,7 @@
 ## Description
 MemoryCache is a fast fixed-size thread-safe key-value in memory cache based on Eviction Policy. It supports both primitive type or user defined type as the key.
 ## Code Coverage
-Overall code coverage percentage: 99.70%
+Overall code coverage percentage: **99.70%**
 ## How To Use
 ### Primitive Type(i.e. int, string, decimal) as Key
 #### Define the memory cache and  its size
